@@ -1,0 +1,5 @@
+MOV R1, 7
+MOV R2, 5
+ADD R1, R2
+OUT R1
+HALT

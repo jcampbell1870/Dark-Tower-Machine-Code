@@ -1,5 +1,3 @@
-# factorial
-
 MOV R1, 1
 MOV R2, 6
 loop:

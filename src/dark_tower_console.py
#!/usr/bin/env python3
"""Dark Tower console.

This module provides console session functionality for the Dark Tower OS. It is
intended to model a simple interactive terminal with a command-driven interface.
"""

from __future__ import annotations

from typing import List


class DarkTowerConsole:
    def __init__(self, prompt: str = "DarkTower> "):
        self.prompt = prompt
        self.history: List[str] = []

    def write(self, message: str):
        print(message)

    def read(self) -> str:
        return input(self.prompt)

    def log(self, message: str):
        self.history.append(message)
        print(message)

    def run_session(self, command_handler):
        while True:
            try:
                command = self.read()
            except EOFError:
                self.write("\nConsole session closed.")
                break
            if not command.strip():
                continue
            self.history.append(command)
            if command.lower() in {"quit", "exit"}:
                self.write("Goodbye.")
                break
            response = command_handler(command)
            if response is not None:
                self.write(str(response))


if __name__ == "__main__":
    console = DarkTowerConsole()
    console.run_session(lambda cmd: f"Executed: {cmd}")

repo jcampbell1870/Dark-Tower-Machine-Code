@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+"""Dark Tower system calls.
+
+A lightweight system-call interface for the Dark Tower operating system. The
+system call layer is intentionally educational and simple, mirroring the idea of
+user-level requests which are serviced by the kernel or OS runtime.
+"""
+
+from __future__ import annotations
+
+from typing import Any, Dict
+
+
+class DarkTowerSystemCalls:
+    def __init__(self, kernel=None):
+        self.kernel = kernel
+        self.calls = {
+            "read": self.read,
+            "write": self.write,
+            "status": self.status,
+            "memdump": self.memdump,
+            "run": self.run,
+            "help": self.help,
+        }
+
+    def read(self, target: str) -> str:
+        if self.kernel is None:
+            return f"READ {target}"
+        if hasattr(self.kernel, "filesystem"):
+            try:
+                return self.kernel.filesystem.read(target)
+            except FileNotFoundError:
+                return f"File not found: {target}"
+        return f"READ {target}"
+
+    def write(self, target: str, content: str) -> str:
+        if self.kernel is None:
+            return f"WRITE {target} -> {content}"
+        if hasattr(self.kernel, "filesystem"):
+            return self.kernel.filesystem.write(target, content)
+        return f"WRITE {target} -> {content}"
+
+    def status(self) -> Dict[str, Any]:
+        if self.kernel is None:
+            return {"status": "unknown"}
+        return {
+            "registers": self.kernel.os.registers,
+            "memory": self.kernel.os.memory[:16],
+            "processes": self.kernel.process_manager.list_processes(),
+        }
+
+    def memdump(self, count: int = 16) -> list[int]:
+        if self.kernel is None:
+            return []
+        return self.kernel.os.memory[:count]
+
+    def run(self, program_path: str):
+        if self.kernel is None:
+            return f"RUN {program_path}"
+        return self.kernel.run_program(program_path)
+
+    def help(self) -> str:
+        return """
+Available system calls:
+  read <file>
+  write <file> <content>
+  status
+  memdump [count]
+  run <program>
+  help
+"""
+
+    def dispatch(self, name: str, *args):
+        handler = self.calls.get(name.lower())
+        if handler is None:
+            raise KeyError(f"Unsupported system call: {name}")
+        return handler(*args)
+
+
+if __name__ == "__main__":
+    calls = DarkTowerSystemCalls()
+    print(calls.help())
+    print(calls.dispatch("status"))

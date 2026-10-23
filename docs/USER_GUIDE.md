@@ -1,12 +1,12 @@
 # Dark Tower User Guide
 
-This guide explains how to use the Dark Tower OS with its advanced operating-system features, interpreter, process manager, and filesystem.
+This guide explains how to use the Dark Tower OS with its advanced operating-system features, interpreter, process manager, filesystem, scheduler, bootloader, and system-call interface.
 
 ## Overview
 
 The Dark Tower Operating System is a conceptual environment built to power Dark Tower-based computers and machine-code learning systems. It is inspired by IBM-like system architecture while remaining simple enough to study and modify.
 
-The project now includes:
+The project includes:
 
 - a virtual machine
 - an assembler
@@ -16,7 +16,10 @@ The project now includes:
 - an interactive shell
 - a filesystem abstraction
 - a process manager
-- a system monitor
+- a scheduler
+- a bootloader
+- a system-call interface
+- a console session manager
 
 ## Starting the system
 
@@ -31,6 +34,7 @@ Example shell commands:
 ```text
 help
 boot
+bootloader
 run examples/hello.dt
 interpret examples/hello.dt
 status
@@ -39,6 +43,7 @@ memory 32
 ls
 cat README.txt
 processes
+scheduler
 monitor
 history
 quit
@@ -81,30 +86,35 @@ write myfile.txt Hello Dark Tower
 rm myfile.txt
 ```
 
-## Process tracking
+## Process and scheduler usage
 
-The process manager tracks active system processes and their execution state.
+The process manager tracks active system processes and their execution state, while the scheduler manages a simple ready queue.
 
 ```text
 processes
+scheduler
 ```
 
-## Monitor view
+## System calls
 
-The monitor gives a system-wide summary of the Dark Tower environment.
+The system call interface supports commands such as:
 
 ```text
-monitor
+read README.txt
+status
+memdump 16
+run examples/hello.dt
+help
 ```
 
-## Programming recommendations
+## Console and boot workflow
 
-- keep programs small and readable
-- validate memory and registers when debugging
-- use `OUT` and `PRINT` for diagnostic values
-- keep each process or routine focused on one operation
-- end all programs with `HALT`
+Use the bootloader or shell to initialize the system and then interact with the console session.
+
+```text
+bootloader
+```
 
 ## Summary
 
-The Dark Tower OS is intended to be a learning environment and conceptual operating platform for Dark Tower computer systems. It supports low-level execution, high-level interpretation, system monitoring, and general operating-system-style resource management in one repository.
+The Dark Tower OS is intended to be a learning environment and conceptual operating platform for Dark Tower computer systems. It supports low-level execution, high-level interpretation, system monitoring, resource management, and system-call behavior in one repository.

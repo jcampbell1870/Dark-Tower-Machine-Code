@@ -1,6 +1,6 @@
 # Dark Tower Operating System
 
-The Dark Tower Operating System is an IBM-inspired virtual operating environment designed to power Dark Tower-based computers, training systems, and educational machine-code platforms.
+The Dark Tower Operating System is a conceptual IBM-inspired operating environment designed to power Dark Tower-based computers, training systems, and educational machine-code platforms.
 
 This project is structured as a small but increasingly realistic operating system with:
 
@@ -11,6 +11,8 @@ This project is structured as a small but increasingly realistic operating syste
 - process management
 - scheduler support
 - memory and register monitoring
+- system call handling
+- console session management
 - high-level language interpretation and execution
 
 ## Included components
@@ -27,6 +29,8 @@ This project is structured as a small but increasingly realistic operating syste
 - `src/dark_tower_scheduler.py` — scheduling queue and dispatcher
 - `src/dark_tower_bootloader.py` — system bootloader
 - `src/dark_tower_monitor.py` — operational monitoring dashboard
+- `src/dark_tower_system_calls.py` — Dark Tower system call interface
+- `src/dark_tower_console.py` — textual console and shell session manager
 
 ## Boot and system startup
 
@@ -65,6 +69,18 @@ The scheduler demonstrates how a basic operating system could manage a ready que
 
 The system includes a simple in-memory file system for maintaining text-based resources. The shell allows users to browse files, create or remove files, and inspect system state.
 
+## System calls and console services
+
+The Dark Tower OS includes a simple system call model for operations such as:
+
+- `read` from a file or stream
+- `write` to output or a file
+- `status` for hardware and process information
+- `memdump` for memory inspection
+- `run` to start a process
+
+This function set gives the system a practical OS-style interface without turning the project into production code.
+
 ## Machine language and interpreter
 
 The Dark Tower environment supports:
@@ -82,6 +98,7 @@ The Dark Tower environment supports:
 4. Use `interpret` with a source script.
 5. Inspect the scheduler and process queue.
 6. Review the monitor and memory output.
+7. Exercise the system call and console interfaces.
 
 ## License
 

@@ -1,12 +1,12 @@
 # Dark Tower User Guide
 
-This guide explains how to use the Dark Tower OS, the language interpreter, and the command shell in practice.
+This guide explains how to use the Dark Tower OS with its advanced operating-system features, interpreter, process manager, and filesystem.
 
 ## Overview
 
-The Dark Tower Operating System is a conceptual environment built to power Dark Tower-based computers and machine-code learning systems. It is inspired by IBM-style system architecture while remaining simple enough to study and modify.
+The Dark Tower Operating System is a conceptual environment built to power Dark Tower-based computers and machine-code learning systems. It is inspired by IBM-like system architecture while remaining simple enough to study and modify.
 
-The project includes:
+The project now includes:
 
 - a virtual machine
 - an assembler
@@ -14,6 +14,9 @@ The project includes:
 - a language interpreter
 - an operating-system runtime
 - an interactive shell
+- a filesystem abstraction
+- a process manager
+- a system monitor
 
 ## Starting the system
 
@@ -31,7 +34,13 @@ boot
 run examples/hello.dt
 interpret examples/hello.dt
 status
-memory
+registers
+memory 32
+ls
+cat README.txt
+processes
+monitor
+history
 quit
 ```
 
@@ -61,34 +70,41 @@ PRINT result
 HALT
 ```
 
-## Assembly programs
+## Filesystem usage
+
+The OS includes a simple filesystem abstraction that supports:
 
 ```text
-MOV R1, 7
-MOV R2, 5
-ADD R1, R2
-OUT R1
-HALT
+ls
+cat README.txt
+write myfile.txt Hello Dark Tower
+rm myfile.txt
 ```
 
-## Shell responsibilities
+## Process tracking
 
-The shell acts as the interface between a user and the Dark Tower kernel. It lets you:
+The process manager tracks active system processes and their execution state.
 
-- boot the system
-- run machine programs
-- interpret language scripts
-- inspect machine state
-- exit cleanly
+```text
+processes
+```
+
+## Monitor view
+
+The monitor gives a system-wide summary of the Dark Tower environment.
+
+```text
+monitor
+```
 
 ## Programming recommendations
 
 - keep programs small and readable
-- use labels carefully
-- use `OUT` or `PRINT` for debugging values
-- make sure every routine halts cleanly
-- build programs in stages instead of creating giant scripts at once
+- validate memory and registers when debugging
+- use `OUT` and `PRINT` for diagnostic values
+- keep each process or routine focused on one operation
+- end all programs with `HALT`
 
 ## Summary
 
-The Dark Tower OS is intended to be a learning environment and a conceptual operating platform for Dark Tower computer systems. It supports low-level execution, high-level interpretation, and operator-friendly system interaction in one project.
+The Dark Tower OS is intended to be a learning environment and conceptual operating platform for Dark Tower computer systems. It supports low-level execution, high-level interpretation, system monitoring, and general operating-system-style resource management in one repository.

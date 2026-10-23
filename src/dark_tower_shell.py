@@ -14,6 +14,7 @@ from dark_tower_kernel import DarkTowerKernel
 class DarkTowerShell:
     def __init__(self):
         self.kernel = DarkTowerKernel()
+        self.command_history = []
 
     def run(self):
         print(self.kernel.boot_banner)
@@ -26,14 +27,25 @@ class DarkTowerShell:
                 break
             if not command.strip():
                 continue
+            self.command_history.append(command)
             result = self.kernel.dispatch(command)
             if result == "QUIT":
                 print("Goodbye.")
                 break
             if result is not None:
-                if isinstance(result, dict):
-                    for key, value in result.items():
-                        print(f"{key}: {value}")
+                if isinstance(result, (dict, list)):
+                    if isinstance(result, list):
+                        for item in result:
+                            if isinstance(item, dict):
+                                for k, v in item.items():
+                                    print(f"{k}: {v}")
+                            else:
+                                print(item)
+                    else:
+                        for key, value in result.items():
+                            print(f"{key}: {value}")
+                elif isinstance(result, str) and "\n" in result:
+                    print(result)
                 else:
                     print(result)
 

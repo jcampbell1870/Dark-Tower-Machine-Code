@@ -1,0 +1,10 @@
+# factorial
+
+MOV R1, 1
+MOV R2, 6
+loop:
+MUL R1, R2
+SUB R2, 1
+JNZ R2, loop
+OUT R1
+HALT

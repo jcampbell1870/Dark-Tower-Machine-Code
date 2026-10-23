@@ -1,83 +1,88 @@
 # Dark Tower Operating Manual
 
-This manual describes how to use the Dark Tower environment as a teaching operating system and development sandbox.
+This manual defines the operational behavior of the Dark Tower operating system and explains how it is intended to power Gray-Box or educational Dark Tower-based computers.
 
-## Purpose of the system
+## System purpose
 
-The Dark Tower project is a virtual operating environment for studying:
+The Dark Tower OS is a conceptual operating environment designed for:
 
-- registers and memory
-- arithmetic and logic
-- branch logic and loops
-- machine execution
-- translation from a higher-level language into assembly-like instructions
+- machine-code execution
+- OS-style runtime management
+- structured instruction handling
+- learning and experimenting with system design
+- translation from high-level language into executable instructions
 
-## System components
+## Operating model
 
-### 1. Virtual machine
-The VM reads assembly instructions and executes them sequentially. It maintains the register file, memory array, and program counter.
+The runtime uses an IBM-inspired model with:
 
-### 2. Assembler
-The assembler turns a source file into a human-readable machine code listing. It is ideal for learning how instructions are expressed in a structured machine format.
+- general-purpose registers
+- memory addressing
+- branch and jump instructions
+- stack-based subroutine flow
+- console input and output
 
-### 3. Translator
-The translator accepts a minimalist high-level language and emits assembly-like statements.
+## Boot and load process
 
-## Running a program
-
-From the repository root:
+The operating environment begins by loading a Dark Tower program into memory and then stepping through instructions with a program counter.
 
 ```bash
-python3 src/dark_tower_vm.py examples/hello.dt
+python3 src/dark_tower_os.py examples/hello.dt
 ```
 
-The output should appear in the terminal window.
+This is the equivalent of a simple machine boot and program launch sequence.
 
-## Creating your own programs
+## Program execution model
 
-Create a new text file, for example:
+Programs are read line by line and executed with the following lifecycle:
+
+1. load source
+2. parse instructions
+3. resolve labels and addresses
+4. execute instructions in order
+5. optionally call subroutines
+6. halt on the final instruction
+
+## Example use case
 
 ```text
-MOV R1, 9
-MOV R2, 3
+MOV R1, 10
+MOV R2, 5
 ADD R1, R2
 OUT R1
 HALT
 ```
 
-Save the file as `examples/my_example.dt` and run:
+This program demonstrates a small computational task run under the Dark Tower OS runtime.
+
+## Translation workflow
+
+The system can accept simple high-level input and convert it to executable machine instructions.
 
 ```bash
-python3 src/dark_tower_vm.py examples/my_example.dt
+python3 src/dark_tower_language_processor.py my_source.dt
 ```
 
-## Example programs
+This makes the runtime useful for both low-level programmers and users learning structured system design.
 
-The repository includes:
+## Operational guidance
 
-- `examples/hello.dt` — basic arithmetic demo
-- `examples/factorial.dt` — iterative multiplication example
+- Validate each instruction before running the program.
+- Use comments to clarify sections of code.
+- Ensure labels are unique.
+- Prefer short, readable instructions in training environments.
+- Keep a clear separation between system runtime logic and user code.
 
-## Troubleshooting
+## Maintenance and debugging
 
-### Program does not start
-- Check that the file path is correct.
-- Verify that the file exists and is readable.
-- Ensure instruction names are spelled correctly.
+Use the following practices to maintain system reliability:
 
-### Unexpected output
-- Add `OUT` instructions before and after key operations.
-- Check register values before branching.
-- Confirm that jumps target valid labels.
-
-### Halt issues
-- Use `HALT` at the end of every program.
-- Confirm branch logic does not create an infinite loop unless intentional.
-
-## Security and teaching scope
-
-This project is for education and experimentation only. It is not intended as production firmware or as a substitute for IBM system software.
+- print register values during testing
+- verify loop exit conditions
+- watch stack behavior in subroutines
+- inspect memory when using `LOAD` and `STORE`
+- use `HALT` deliberately as the end of a program path
 
 ## Summary
 
-The Dark Tower operating environment is designed to be simple enough for novices to learn from while still showing good machine-system design ideas inspired by IBM mainframe architecture.
+The Dark Tower Operating System is meant to provide a conceptual platform capable of powering computers built around the Dark Tower architecture, while remaining accessible for learning, experimentation, and machine-code development.

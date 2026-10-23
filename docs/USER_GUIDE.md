@@ -1,112 +1,81 @@
 # Dark Tower User Guide
 
-This guide teaches how to use the Dark Tower Machine Code project, from first-time setup to assembly execution and simple high-level translation.
+This guide explains how the Dark Tower Operating System and its language processing tools are used in practice.
 
-## What the project provides
+## Overview
 
-The repository includes a lightweight machine environment inspired by IBM z/Architecture principles:
+The Dark Tower Operating System is a virtual, IBM-inspired operating environment designed to run machine-code programs, educational operating-system patterns, and a translated high-level language pipeline.
 
-- instructions with registers and memory access
-- jump, call, and return flow control
-- simple arithmetic and loop behavior
-- high-level translation support for educational scripts
+It is built to support:
 
-## Running the project
+- machine-level execution
+- assembly programming
+- instruction translation
+- educational OS concepts
+- platform design for Dark Tower-based computers
+
+## Core components
+
+- `src/dark_tower_vm.py` — the machine runtime
+- `src/dark_tower_assembler.py` — converts assembly to machine-style output
+- `src/dark_tower_translator.py` — translates simple source into assembly
+- `src/dark_tower_language_processor.py` — higher-level language processing front end
+- `src/dark_tower_os.py` — OS-style boot/runtime environment
+
+## Running the Dark Tower OS
 
 From the repository root:
 
 ```bash
-python3 src/dark_tower_assembler.py examples/hello.dt
-python3 src/dark_tower_vm.py examples/hello.dt
-python3 src/dark_tower_translator.py examples/factorial.dt
+python3 src/dark_tower_os.py examples/hello.dt
 ```
 
-You may also use the translator with a custom input file, such as:
+This boots the virtual OS runtime and executes the program in the same way a small system would load and run a user program.
+
+## Language processing
+
+Use the language processor on source text like:
 
 ```text
-SET x = 10
-SET y = 5
-SET total = x + y
-PRINT total
+SET total = 7
+SET count = 5
+SET result = total + count
+PRINT result
 HALT
 ```
 
-## Basic assembly syntax
+Run:
 
-Dark Tower programs are written as a sequence of instructions and optional labels.
-
-```text
-MOV R1, 10
-MOV R2, 5
-ADD R1, R2
-OUT R1
-HALT
+```bash
+python3 src/dark_tower_language_processor.py my_program.dt
 ```
 
-## Registers and memory
+The output is assembly-like instructions that can be interpreted by the runtime.
 
-The VM uses the following register set:
+## Memory and registers
 
-- `R0` through `R7`
+The OS uses:
 
-Memory is a fixed-size array of 4096 slots. Example:
+- `R0` to `R7` as general-purpose registers
+- a 4096-cell memory array
+- a call stack for subroutines
+- a program counter for sequential execution
 
-```text
-MOV R1, 125
-STORE [100], R1
-LOAD R2, [100]
-OUT R2
-HALT
-```
+## Development workflow
 
-## Control flow
+1. Write a high-level or assembly program.
+2. Run the language processor or assembler.
+3. Load the resulting instructions into the Dark Tower VM or OS runtime.
+4. Observe output and refine the logic.
 
-Labels allow jumping to instructions and implementing loops.
+## Recommended patterns
 
-```text
-MOV R0, 0
-start:
-ADD R0, 1
-OUT R0
-JNZ R0, start
-HALT
-```
+- Use comments to explain code paths.
+- Keep labels unique.
+- Use `OUT` for debugging intermediate values.
+- End every program with `HALT`.
+- Test small programs before scaling to longer routines.
 
-This example continues incrementing and printing until a stopping condition is reached.
+## Dark Tower OS philosophy
 
-## Comments
-
-Use `;` or `#` to document source code.
-
-```text
-; Counter program
-MOV R0, 0
-ADD R0, 1
-OUT R0
-HALT
-```
-
-## Translator usage
-
-The translator accepts a small high-level syntax:
-
-```text
-SET x = 10
-SET y = 5
-SET total = x + y
-PRINT total
-HALT
-```
-
-The tool emits assembly-like output that is easy to inspect and run.
-
-## Best practices
-
-- keep variables and labels readable
-- use comments when a routine becomes longer
-- test small programs before adding loops
-- use `OUT` to debug values during development
-
-## Summary
-
-The Dark Tower environment is built to help you learn how a machine executes instructions, how control flow works, and how a translator can convert a simple language into machine-like operations.
+The Dark Tower operating system is intended to act as a conceptual, educational platform for machine-code computing. It is meant to teach how machines boot, execute instructions, manage memory, and translate higher-level source into operating-system-acceptable logic.

@@ -1,27 +1,31 @@
-# Dark Tower Machine Code
+# Dark Tower Operating System
 
-Dark Tower Machine Code is a compact, IBM z/Architecture-inspired virtual machine environment designed to teach machine execution, instruction encoding, memory addressing, and operating-system-like control flow in a simple Python implementation.
+The Dark Tower Operating System is an IBM-inspired virtual operating environment designed to power computers, training systems, and machine-code experiments built around the Dark Tower machine architecture.
 
-The project includes:
+This repository is not a copy of IBM proprietary product code. It is a clean, educational, and extensible operating-system platform inspired by IBM mainframe design principles: explicit register usage, memory management, branch logic, execution flow, and machine-language translation.
 
-- a virtual machine runtime for the Dark Tower instruction set
-- an assembler for turning source code into machine-readable listings
-- a translator from a small high-level language into assembly
-- example programs and training manuals
-- educational documentation for learning and experimentation
+## What is included
 
-This repository is intentionally readable and portable. It is not a clone of IBM proprietary hardware or firmware; it is a clean educational implementation inspired by IBM mainframe architecture principles.
+- `src/dark_tower_vm.py` — the Dark Tower virtual machine that executes machine programs
+- `src/dark_tower_assembler.py` — assembler that converts assembly to machine-style output
+- `src/dark_tower_translator.py` — translator from a simple high-level language to assembly
+- `src/dark_tower_language_processor.py` — a language processor and translation frontend
+- `src/dark_tower_os.py` — the operating-system-style runtime and boot environment
+- `examples/hello.dt` — a basic system startup and output example
+- `examples/factorial.dt` — arithmetic loop example
+- `docs/USER_GUIDE.md` — practical operating guide
+- `docs/MACHINE_CODE_REFERENCE.md` — instruction set and machine model reference
+- `docs/OPERATING_MANUAL.md` — system operations and maintenance guide
 
-## Repository layout
+## Design goals
 
-- `src/dark_tower_vm.py` — executes Dark Tower assembly programs
-- `src/dark_tower_assembler.py` — assembles source into a machine-code style listing
-- `src/dark_tower_translator.py` — translates simple high-level statements to assembly
-- `examples/hello.dt` — basic arithmetic and output example
-- `examples/factorial.dt` — loop-based factorial example
-- `docs/USER_GUIDE.md` — beginner-friendly user manual
-- `docs/MACHINE_CODE_REFERENCE.md` — machine architecture reference
-- `docs/OPERATING_MANUAL.md` — system operations guide
+This project is designed to power Dark Tower-based computers with:
+
+- a bootable-style operating runtime
+- deterministic instruction execution
+- general-purpose registers and memory model
+- machine-code translation from a readable programming language
+- support for teaching, experimentation, and system design
 
 ## Quick start
 
@@ -30,10 +34,22 @@ From the repository root:
 ```bash
 python3 src/dark_tower_assembler.py examples/hello.dt
 python3 src/dark_tower_vm.py examples/hello.dt
-python3 src/dark_tower_translator.py examples/factorial.dt
+python3 src/dark_tower_language_processor.py examples/hello.dt
+python3 src/dark_tower_os.py examples/hello.dt
 ```
 
-## Example assembly
+## Dark Tower OS execution model
+
+The Dark Tower OS run environment includes:
+
+- register file: `R0` through `R7`
+- memory array: 4096 cells
+- program counter: instruction address tracker
+- stack: subroutine and procedure support
+- console I/O: print and read operations
+- boot and run loop: loads a program and executes it in a stable runtime
+
+## Sample Dark Tower assembly
 
 ```text
 MOV R1, 7
@@ -43,25 +59,41 @@ OUT R1
 HALT
 ```
 
-This program loads values into registers, adds them, prints the result, and halts.
+This instruction sequence loads values, adds them, prints the result, and halts the machine. It is the basic form of a Dark Tower computer program.
 
-## The Dark Tower machine model
+## Language processor and translator
 
-The runtime uses:
+The project includes a high-level translator that turns simple statements into assembly-like instructions. The language processing model helps students and developers move from readable source code to executable machine logic.
 
-- general-purpose registers: `R0` to `R7`
-- a memory array with 4096 slots
-- a program counter
-- a stack for subroutine calls
-- console input/output
+Example high-level source:
+
+```text
+SET total = 7
+SET count = 5
+SET result = total + count
+PRINT result
+HALT
+```
+
+The translation layer converts these statements into instructions understood by the Dark Tower VM.
 
 ## Learning path
 
-1. Read `docs/USER_GUIDE.md`
-2. Study `docs/MACHINE_CODE_REFERENCE.md`
-3. Run the examples in `examples/`
-4. Modify programs and test new control flow
-5. Translate your own high-level scripts into Dark Tower assembly
+1. Read the user guide.
+2. Study the machine-code reference.
+3. Run the example programs.
+4. Edit the examples and experiment with new instructions.
+5. Build custom programs that operate inside the Dark Tower OS runtime.
+
+## Operating-system philosophy
+
+The Dark Tower OS is a conceptual operating system for educational and experimental computing. It emphasizes:
+
+- ownership of resources and memory
+- stable program flow
+- readable instruction design
+- process-like execution segments
+- compatibility with modern training workflows
 
 ## License
 

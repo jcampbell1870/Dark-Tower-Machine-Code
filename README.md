@@ -1,134 +1,87 @@
 # Dark Tower Operating System
 
-The Dark Tower Operating System is a conceptual IBM-inspired operating environment designed to power Dark Tower-based computers, machine-code training systems, and educational platforms for low-level software design.
+The Dark Tower Operating System is an IBM-inspired virtual operating environment designed to power Dark Tower-based computers, training systems, and educational machine-code platforms.
 
-This project is intended to function as a small operating system and programming environment with:
+This project is structured as a small but increasingly realistic operating system with:
 
-- a boot sequence
+- boot sequence and bootloader support
 - a kernel-style runtime layer
-- program execution under a system monitor
-- memory and register management
-- a low-level machine model
-- a high-level language interpreter
-- a command shell for system control and program launch
+- command shell interaction
+- file system support
+- process management
+- scheduler support
+- memory and register monitoring
+- high-level language interpretation and execution
 
-## Project overview
+## Included components
 
-The repository includes:
+- `src/dark_tower_vm.py` — Dark Tower virtual machine
+- `src/dark_tower_assembler.py` — assembler
+- `src/dark_tower_translator.py` — source translator
+- `src/dark_tower_os.py` — OS execution runtime
+- `src/dark_tower_kernel.py` — kernel command and control layer
+- `src/dark_tower_shell.py` — interactive system shell
+- `src/dark_tower_interpreter.py` — high-level source interpreter
+- `src/dark_tower_filesystem.py` — lightweight file system
+- `src/dark_tower_process_manager.py` — process manager
+- `src/dark_tower_scheduler.py` — scheduling queue and dispatcher
+- `src/dark_tower_bootloader.py` — system bootloader
+- `src/dark_tower_monitor.py` — operational monitoring dashboard
 
-- `src/dark_tower_vm.py` — the Dark Tower virtual machine runtime
-- `src/dark_tower_assembler.py` — converts assembly to machine-style output
-- `src/dark_tower_translator.py` — simple translation utility for readable source
-- `src/dark_tower_os.py` — operating-system-style runtime
-- `src/dark_tower_kernel.py` — kernel-level runtime and system control
-- `src/dark_tower_shell.py` — Dark Tower interactive shell
-- `src/dark_tower_interpreter.py` — full interpreter for the Dark Tower programming language
-- `src/dark_tower_language_processor.py` — language processing front end
-- `examples/hello.dt` — startup and output example
-- `examples/factorial.dt` — arithmetic loop example
-- `docs/USER_GUIDE.md` — beginner operational guide
-- `docs/MACHINE_CODE_REFERENCE.md` — instruction set and machine model
-- `docs/OPERATING_MANUAL.md` — operation and maintenance guide
-- `docs/OS_ARCHITECTURE.md` — system architecture overview
-- `docs/INTERPRETER_GUIDE.md` — Dark Tower interpreter reference
+## Boot and system startup
 
-## Why this system matters
-
-The Dark Tower OS is inspired by IBM mainframe principles:
-
-- explicit register usage
-- memory addressing
-- structured execution flow
-- stack-oriented control patterns
-- machine-language translation from readable source
-- operating-system control and monitoring
-
-## Quick start
-
-Launch the interactive shell:
+Run the shell:
 
 ```bash
 python3 src/dark_tower_shell.py
 ```
 
-Supported shell commands:
+Use commands such as:
 
 ```text
 boot
+bootloader
 run examples/hello.dt
 interpret examples/hello.dt
 status
-memory
+memory 32
+ls
+processes
+scheduler
+monitor
 help
 quit
 ```
 
-You can also run the OS runtime directly:
+## Bootloader
 
-```bash
-python3 src/dark_tower_os.py examples/hello.dt
-```
+The Dark Tower bootloader provides a system startup routine similar to a real computer boot process. It initializes the machine state, loads processes, and prepares the runtime for execution.
 
-## Sample assembly program
+## Scheduler and process model
 
-```text
-MOV R1, 7
-MOV R2, 5
-ADD R1, R2
-OUT R1
-HALT
-```
+The scheduler demonstrates how a basic operating system could manage a ready queue and process lifecycle. This keeps the project educational while making it feel more like a real computer OS instead of only a virtual machine.
 
-## Sample interpreter source
+## File system and shell operations
 
-```text
-SET total = 7
-SET count = 5
-SET result = total + count
-PRINT result
-HALT
-```
+The system includes a simple in-memory file system for maintaining text-based resources. The shell allows users to browse files, create or remove files, and inspect system state.
 
-The interpreter executes this source directly rather than only translating it.
+## Machine language and interpreter
 
-## Dark Tower interpreter
+The Dark Tower environment supports:
 
-The interpreter is a full computer-programming language runtime for the Dark Tower environment. It supports:
-
-- variable assignment
-- arithmetic expressions
-- print operations
-- conditionals
-- loops
-- labels and jumps
-- halting the program
-
-Run it directly with:
-
-```bash
-python3 src/dark_tower_interpreter.py examples/hello.dt
-```
-
-This interprets Dark Tower source code and executes the logic in a human-readable language.
-
-## Operating-system features
-
-The Dark Tower OS includes:
-
-- boot sequence and banner output
-- kernel-style runtime shell
-- system status and memory introspection
-- command-driven OS control
-- programs loaded and executed from files
-- a conceptual architecture suitable for Dark Tower computer systems
+- assembly-style instructions
+- translator-based source processing
+- a full interpreter for a high-level Dark Tower language
+- execution loops and branching logic
 
 ## Learning path
 
-1. Start the shell and run `boot`.
-2. Run the example programs in `examples/`.
-3. Read `docs/OS_ARCHITECTURE.md`.
-4. Study the machine reference.
-5. Write your own Dark Tower programs and run them through the interpreter.
+1. Start the shell.
+2. Run `bootloader` and `boot`.
+3. Open `examples/hello.dt` and run it.
+4. Use `interpret` with a source script.
+5. Inspect the scheduler and process queue.
+6. Review the monitor and memory output.
 
 ## License
 

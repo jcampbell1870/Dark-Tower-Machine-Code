@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+"""Dark Tower bootloader.
+
+Provides a boot sequence for the Dark Tower operating system. The bootloader is a
+lightweight, educational loader that prepares the system state, initializes the
+kernel, and launches a program if provided.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Optional
+
+
+class DarkTowerBootloader:
+    def __init__(self, kernel=None):
+        self.kernel = kernel
+        self.banner = """
+    ___  ____  ____  ____  ____  ____  ____
+   / __ \/ __ \/ __ \/ __ \/ __ \/ __ \/ __ \
+  / /_/ / /_/ / /_/ / /_/ / /_/ / /_/ / /_/ /
+ / ____/ ____/ ____/ ____/ ____/ ____/ ____/
+/_/   /_/   /_/   /_/   /_/   /_/   /_/   /_/ 
+
+        Dark Tower Computer Operating System
+        Bootloader v1.2
+"""
+
+    def initialize_system(self):
+        if self.kernel is None:
+            return "Bootloader ready. Kernel not attached."
+        self.kernel.os.registers = {f"R{i}": 0 for i in range(8)}
+        self.kernel.os.memory = [0] * 4096
+        self.kernel.process_manager.processes.clear()
+        return "System initialized."
+
+    def load_program(self, program_path: str) -> str:
+        path = Path(program_path)
+        if not path.exists():
+            raise FileNotFoundError(f"Program not found: {program_path}")
+        return f"Loaded program: {path.name}"
+
+    def boot(self, program_path: Optional[str] = None) -> str:
+        print(self.banner)
+        status = self.initialize_system()
+        print(status)
+        if program_path is not None:
+            print(self.load_program(program_path))
+            if self.kernel is not None:
+                self.kernel.run_program(program_path)
+        return "Dark Tower system boot complete."
+
+
+if __name__ == "__main__":
+    bootloader = DarkTowerBootloader()
+    print(bootloader.boot())

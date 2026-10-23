@@ -1,18 +1,19 @@
 # Dark Tower User Guide
 
-This guide explains how to use the Dark Tower OS, the language processor, the runtime, and the interactive shell.
+This guide explains how to use the Dark Tower OS, the language interpreter, and the command shell in practice.
 
 ## Overview
 
-The Dark Tower Operating System is a conceptual environment built to power Dark Tower-based computers. It is rooted in IBM-inspired machine principles, but implemented as an educational and portable simulator.
+The Dark Tower Operating System is a conceptual environment built to power Dark Tower-based computers and machine-code learning systems. It is inspired by IBM-style system architecture while remaining simple enough to study and modify.
 
 The project includes:
 
 - a virtual machine
 - an assembler
-- a translator and source processor
-- an operating-system-style runtime
-- a command shell
+- a translator
+- a language interpreter
+- an operating-system runtime
+- an interactive shell
 
 ## Starting the system
 
@@ -28,6 +29,7 @@ Example shell commands:
 help
 boot
 run examples/hello.dt
+interpret examples/hello.dt
 status
 memory
 quit
@@ -41,30 +43,15 @@ You may also execute a program directly without the shell:
 python3 src/dark_tower_os.py examples/hello.dt
 ```
 
-## Example programs
+## Dark Tower interpreter
 
-The repository contains:
+Run the interpreter directly:
 
-- `examples/hello.dt` — startup and output demonstration
-- `examples/factorial.dt` — loop-based arithmetic example
-
-## Assembly programs
-
-An assembly program can look like this:
-
-```text
-MOV R1, 7
-MOV R2, 5
-ADD R1, R2
-OUT R1
-HALT
+```bash
+python3 src/dark_tower_interpreter.py my_program.dt
 ```
 
-The runtime reads this sequence and executes it with the machine model.
-
-## High-level source
-
-The language processor can accept a more readable form:
+Example interpreter source:
 
 ```text
 SET total = 7
@@ -74,26 +61,34 @@ PRINT result
 HALT
 ```
 
-It translates the source into assembly-like instructions that the runtime can interpret.
+## Assembly programs
+
+```text
+MOV R1, 7
+MOV R2, 5
+ADD R1, R2
+OUT R1
+HALT
+```
 
 ## Shell responsibilities
 
-The shell is the user interface for the Dark Tower OS. It allows you to:
+The shell acts as the interface between a user and the Dark Tower kernel. It lets you:
 
 - boot the system
-- launch programs
-- check machine status
-- inspect memory
+- run machine programs
+- interpret language scripts
+- inspect machine state
 - exit cleanly
 
 ## Programming recommendations
 
 - keep programs small and readable
 - use labels carefully
-- use `OUT` to debug intermediate values
-- make sure each program ends with `HALT`
-- develop in small steps rather than large monolithic blocks
+- use `OUT` or `PRINT` for debugging values
+- make sure every routine halts cleanly
+- build programs in stages instead of creating giant scripts at once
 
 ## Summary
 
-The Dark Tower OS is meant to be a learning environment and a conceptual operating platform for Dark Tower computer systems. It is designed to help users understand machine execution, translation, and user-facing operating logic in one place.
+The Dark Tower OS is intended to be a learning environment and a conceptual operating platform for Dark Tower computer systems. It supports low-level execution, high-level interpretation, and operator-friendly system interaction in one project.

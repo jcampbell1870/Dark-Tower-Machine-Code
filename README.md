@@ -2,45 +2,46 @@
 
 The Dark Tower Operating System is a conceptual IBM-inspired operating environment designed to power Dark Tower-based computers, machine-code training systems, and educational platforms for low-level software design.
 
-This project is meant to be more than a toy machine emulator. It is designed to behave like a small operating system environment with:
+This project is intended to function as a small operating system and programming environment with:
 
 - a boot sequence
 - a kernel-style runtime layer
 - program execution under a system monitor
 - memory and register management
-- a language and translation layer for assembly and simple high-level programs
+- a low-level machine model
+- a high-level language interpreter
 - a command shell for system control and program launch
 
 ## Project overview
 
 The repository includes:
 
-- `src/dark_tower_vm.py` — virtual machine runtime
-- `src/dark_tower_assembler.py` — assembly-to-machine listing utility
-- `src/dark_tower_translator.py` — simple translator from readable source to assembly output
+- `src/dark_tower_vm.py` — the Dark Tower virtual machine runtime
+- `src/dark_tower_assembler.py` — converts assembly to machine-style output
+- `src/dark_tower_translator.py` — simple translation utility for readable source
 - `src/dark_tower_os.py` — operating-system-style runtime
-- `src/dark_tower_kernel.py` — kernel-level runtime and system control layer
-- `src/dark_tower_shell.py` — interactive Dark Tower system shell
-- `src/dark_tower_language_processor.py` — high-level source processing front end
-- `examples/hello.dt` — boot and output example
+- `src/dark_tower_kernel.py` — kernel-level runtime and system control
+- `src/dark_tower_shell.py` — Dark Tower interactive shell
+- `src/dark_tower_interpreter.py` — full interpreter for the Dark Tower programming language
+- `src/dark_tower_language_processor.py` — language processing front end
+- `examples/hello.dt` — startup and output example
 - `examples/factorial.dt` — arithmetic loop example
-- `docs/USER_GUIDE.md` — operator and programmer guide
-- `docs/MACHINE_CODE_REFERENCE.md` — machine architecture reference
-- `docs/OPERATING_MANUAL.md` — operating-system operations guide
-- `docs/OS_ARCHITECTURE.md` — architectural overview of the Dark Tower OS
+- `docs/USER_GUIDE.md` — beginner operational guide
+- `docs/MACHINE_CODE_REFERENCE.md` — instruction set and machine model
+- `docs/OPERATING_MANUAL.md` — operation and maintenance guide
+- `docs/OS_ARCHITECTURE.md` — system architecture overview
+- `docs/INTERPRETER_GUIDE.md` — Dark Tower interpreter reference
 
 ## Why this system matters
 
-The Dark Tower OS is intentionally inspired by IBM mainframe architecture principles:
+The Dark Tower OS is inspired by IBM mainframe principles:
 
 - explicit register usage
 - memory addressing
 - structured execution flow
-- queue-like or stack-based control patterns
+- stack-oriented control patterns
 - machine-language translation from readable source
-- system-level boot and runtime management
-
-This makes it suitable for education, simulation, and experimentation in machine-language operating systems.
+- operating-system control and monitoring
 
 ## Quick start
 
@@ -50,11 +51,12 @@ Launch the interactive shell:
 python3 src/dark_tower_shell.py
 ```
 
-Then use commands such as:
+Supported shell commands:
 
 ```text
 boot
 run examples/hello.dt
+interpret examples/hello.dt
 status
 memory
 help
@@ -67,7 +69,7 @@ You can also run the OS runtime directly:
 python3 src/dark_tower_os.py examples/hello.dt
 ```
 
-## Sample Dark Tower instructions
+## Sample assembly program
 
 ```text
 MOV R1, 7
@@ -77,13 +79,7 @@ OUT R1
 HALT
 ```
 
-This is the basic machine-code pattern used by Dark Tower programs: load values into registers, perform arithmetic, output the result, and halt.
-
-## High-level language entry
-
-The language processor lets users write easier source and translate it into system-friendly instructions.
-
-Example source:
+## Sample interpreter source
 
 ```text
 SET total = 7
@@ -93,17 +89,37 @@ PRINT result
 HALT
 ```
 
-The front-end converts this into machine-like assembly instructions for the runtime.
+The interpreter executes this source directly rather than only translating it.
+
+## Dark Tower interpreter
+
+The interpreter is a full computer-programming language runtime for the Dark Tower environment. It supports:
+
+- variable assignment
+- arithmetic expressions
+- print operations
+- conditionals
+- loops
+- labels and jumps
+- halting the program
+
+Run it directly with:
+
+```bash
+python3 src/dark_tower_interpreter.py examples/hello.dt
+```
+
+This interprets Dark Tower source code and executes the logic in a human-readable language.
 
 ## Operating-system features
 
-The Dark Tower OS now includes:
+The Dark Tower OS includes:
 
 - boot sequence and banner output
 - kernel-style runtime shell
 - system status and memory introspection
 - command-driven OS control
-- program loading and execution management
+- programs loaded and executed from files
 - a conceptual architecture suitable for Dark Tower computer systems
 
 ## Learning path
@@ -112,7 +128,7 @@ The Dark Tower OS now includes:
 2. Run the example programs in `examples/`.
 3. Read `docs/OS_ARCHITECTURE.md`.
 4. Study the machine reference.
-5. Write your own Dark Tower programs and test them in the shell.
+5. Write your own Dark Tower programs and run them through the interpreter.
 
 ## License
 

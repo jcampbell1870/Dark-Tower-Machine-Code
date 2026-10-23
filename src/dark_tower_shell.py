@@ -2,13 +2,11 @@
 """Dark Tower shell.
 
 This module provides an interactive command shell that gives the user a simple
-operating-system style interface for booting, running, inspecting, and managing
-Dark Tower programs.
+operating-system style interface for booting, running, interpreting, inspecting,
+and managing Dark Tower programs.
 """
 
 from __future__ import annotations
-
-import sys
 
 from dark_tower_kernel import DarkTowerKernel
 

@@ -1,40 +1,70 @@
 # Dark Tower User Guide
 
-This guide explains how the Dark Tower Operating System and its language processing tools are used in practice.
+This guide explains how to use the Dark Tower OS, the language processor, the runtime, and the interactive shell.
 
 ## Overview
 
-The Dark Tower Operating System is a virtual, IBM-inspired operating environment designed to run machine-code programs, educational operating-system patterns, and a translated high-level language pipeline.
+The Dark Tower Operating System is a conceptual environment built to power Dark Tower-based computers. It is rooted in IBM-inspired machine principles, but implemented as an educational and portable simulator.
 
-It is built to support:
+The project includes:
 
-- machine-level execution
-- assembly programming
-- instruction translation
-- educational OS concepts
-- platform design for Dark Tower-based computers
+- a virtual machine
+- an assembler
+- a translator and source processor
+- an operating-system-style runtime
+- a command shell
 
-## Core components
+## Starting the system
 
-- `src/dark_tower_vm.py` — the machine runtime
-- `src/dark_tower_assembler.py` — converts assembly to machine-style output
-- `src/dark_tower_translator.py` — translates simple source into assembly
-- `src/dark_tower_language_processor.py` — higher-level language processing front end
-- `src/dark_tower_os.py` — OS-style boot/runtime environment
+Launch the shell from the repository root:
 
-## Running the Dark Tower OS
+```bash
+python3 src/dark_tower_shell.py
+```
 
-From the repository root:
+Example shell commands:
+
+```text
+help
+boot
+run examples/hello.dt
+status
+memory
+quit
+```
+
+## Direct runtime execution
+
+You may also execute a program directly without the shell:
 
 ```bash
 python3 src/dark_tower_os.py examples/hello.dt
 ```
 
-This boots the virtual OS runtime and executes the program in the same way a small system would load and run a user program.
+## Example programs
 
-## Language processing
+The repository contains:
 
-Use the language processor on source text like:
+- `examples/hello.dt` — startup and output demonstration
+- `examples/factorial.dt` — loop-based arithmetic example
+
+## Assembly programs
+
+An assembly program can look like this:
+
+```text
+MOV R1, 7
+MOV R2, 5
+ADD R1, R2
+OUT R1
+HALT
+```
+
+The runtime reads this sequence and executes it with the machine model.
+
+## High-level source
+
+The language processor can accept a more readable form:
 
 ```text
 SET total = 7
@@ -44,38 +74,26 @@ PRINT result
 HALT
 ```
 
-Run:
+It translates the source into assembly-like instructions that the runtime can interpret.
 
-```bash
-python3 src/dark_tower_language_processor.py my_program.dt
-```
+## Shell responsibilities
 
-The output is assembly-like instructions that can be interpreted by the runtime.
+The shell is the user interface for the Dark Tower OS. It allows you to:
 
-## Memory and registers
+- boot the system
+- launch programs
+- check machine status
+- inspect memory
+- exit cleanly
 
-The OS uses:
+## Programming recommendations
 
-- `R0` to `R7` as general-purpose registers
-- a 4096-cell memory array
-- a call stack for subroutines
-- a program counter for sequential execution
+- keep programs small and readable
+- use labels carefully
+- use `OUT` to debug intermediate values
+- make sure each program ends with `HALT`
+- develop in small steps rather than large monolithic blocks
 
-## Development workflow
+## Summary
 
-1. Write a high-level or assembly program.
-2. Run the language processor or assembler.
-3. Load the resulting instructions into the Dark Tower VM or OS runtime.
-4. Observe output and refine the logic.
-
-## Recommended patterns
-
-- Use comments to explain code paths.
-- Keep labels unique.
-- Use `OUT` for debugging intermediate values.
-- End every program with `HALT`.
-- Test small programs before scaling to longer routines.
-
-## Dark Tower OS philosophy
-
-The Dark Tower operating system is intended to act as a conceptual, educational platform for machine-code computing. It is meant to teach how machines boot, execute instructions, manage memory, and translate higher-level source into operating-system-acceptable logic.
+The Dark Tower OS is meant to be a learning environment and a conceptual operating platform for Dark Tower computer systems. It is designed to help users understand machine execution, translation, and user-facing operating logic in one place.
